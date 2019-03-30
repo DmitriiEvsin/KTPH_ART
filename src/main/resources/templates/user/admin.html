@@ -7,24 +7,49 @@
 <body>
 <th:block th:include="/page_parts/_menu"></th:block>
 
-<div class="site-body container">
+<div class="site-body container" align="center">
 
-        <h3>Пользователи</h3>
-        <table class="table tbl-papers">
-            <tr><th>Ид</th><th>Название</th><th></th></tr>
-            <tr th:each="user: ${users}">
-                <td th:text="${user.user_id}" />
-                <td th:text="${user.user_name}" />
-                <td></td>
-            </tr>
-            <tr>
-                <form action="#" th:action="@{/user/save}" th:object="${new_user}" method="post">
-                    <td><input type="text" th:field="*{user_name}" placeholder="Имя пользователя"/></td>
-                    <td><input type="password" th:field="*{encrypted_password}" placeholder="Пароль"/></td>
-                    <td><input type="submit" value="Добавить пользователя" class="btn btn-success" /></td>
+    <h2>Пользователи</h2>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>Ид пользователя</th>
+            <th>Имя пользователя</th>
+            <th class="button-column"></th>
+            <th class="button-column"></th>
+        </tr>
+        </thead>
+        <tr th:each="user: ${users}">
+            <td th:text="${user.user_id}"/>
+            <td th:text="${user.user_name}"/>
+            <td>
+                <form action="#" th:action="@{/user/view}" method="post">
+                    <input type="hidden" name="user_id" th:value="${user.user_id}"/>
+                    <input type="submit" value="Просмотр пользователя" class="btn btn-primary"/>
                 </form>
-            </tr>
-        </table>
+            </td>
+            <td>
+                <form action="#" th:action="@{/user/delete}" method="post">
+                    <input type="hidden" name="user_id" th:value="${user.user_id}"/>
+                    <input type="submit" value="Удалить пользователя" class="btn btn-danger"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <div align="center">
+        <h3>Добавить пользователя:</h3>
+        <form action="#" th:action="@{/user/save}" th:object="${new_user}" method="post">
+            <label>Имя пользователя:</label>
+            <input class="form-control" type="text" th:field="*{user_name}" placeholder="Имя пользователя"
+                   autocomplete="off"/>
+            <label>Пароль:</label>
+            <input class="form-control" type="password" th:field="*{encrypted_password}" placeholder="Пароль"
+                   autocomplete="off"/>
+            <br>
+            <input type="submit" value="Добавить пользователя" class="btn btn-success"/>
+        </form>
+    </div>
+
 </div>
 
 </body>

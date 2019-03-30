@@ -7,15 +7,44 @@
 <th:block th:include="/page_parts/_menu"></th:block>
 
 
-<div class="site-body container">
-        <h3>Пользователи</h3>
-        <table class="table tbl-papers">
-            <tr><th>Ид</th><th>Название</th></tr>
-            <tr>
-                <td th:text="${user.user_id}" />
-                <td th:text="${user.user_name}" />
-            </tr>
-        </table>
+<div class="site-body container" align="center">
+    <h2 th:text="'Имя пользователя: '+${user.user_name}"/>
+
+    <p th:text="'Ид пользователя: '+${user.user_id}"/>
+    <p th:text="'Роли пользователя: '+${user.getRole_names()}"/>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>Роль</th>
+            <th class="button-column"></th>
+        </tr>
+        </thead>
+        <tr th:each="role: ${user.roles}">
+            <td th:text="${role}"/>
+            <td>
+                <form action="#" th:action="@{/user/deleteRole}" method="post">
+                    <input type="hidden" name="user_id" th:value="${user.user_id}"/>
+                    <input type="hidden" name="role_id" th:value="${role.role_id}"/>
+                    <input type="submit" value="Удалить роль" class="btn btn-danger"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <h3>Добавить роль</h3>
+    <form action="#" th:action="@{/user/addRole}" method="post">
+        <input type="hidden" name="user_id" th:value="${user.user_id}"/>
+        <div class="form-group">
+        <select class="form-control" name="role_id">
+            <option th:each="role : ${all_roles}"
+                    th:value="${role.role_id}"
+                    th:utext="${role.role_name}"/>
+        </select>
+        </div>
+        <input type="submit" value="Добавить роль" class="btn btn-success"/>
+    </form>
+
 </div>
 
 

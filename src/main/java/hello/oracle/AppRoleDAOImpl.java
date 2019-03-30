@@ -30,6 +30,18 @@ public class AppRoleDAOImpl implements AppRoleDAO{
     }
 
     @Override
+    public List<AppRole> getUserRoles(Integer userId) {
+        Session session = this.sessionFactory.openSession();
+        Query query = session.createQuery("select ur.appRole from UserRole ur where ur.appUser.user_id = :userid");
+        query.setParameter("userid",userId);
+        //List<AppUser> user_l = session.createQuery("from AppUser").list();
+        List<AppRole> roles = query.list();
+        session.close();
+        //AppUser appUser = user_l.get(0);
+        return roles;
+    }
+
+    @Override
     public List<AppRole> getAppRoles()
     {
         Session session = this.sessionFactory.openSession();
@@ -48,6 +60,40 @@ public class AppRoleDAOImpl implements AppRoleDAO{
 
         transaction.commit();
         session.close();
+    }
+
+    public AppRole getRoleById(int id)
+    {
+        Session session = this.sessionFactory.openSession();
+        AppRole role = (AppRole) session.load(AppRole.class, id);
+        return role;
+    }
+
+    public void deleteAppRole(Integer role_id)
+    {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = this.sessionFactory.openSession();;
+            transaction = session.getTransaction();
+            transaction.begin();
+
+            AppRole appRole = session.get(AppRole.class, role_id);
+            if(appRole!=null){
+                session.delete(appRole);
+            }
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 
 }

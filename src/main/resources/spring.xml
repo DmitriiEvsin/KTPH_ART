@@ -50,13 +50,14 @@
                 <value>hello.model.AppUser</value>
                 <value>hello.model.AppRole</value>
                 <value>hello.model.UserRole</value>
+                <value>hello.model.UserRoleUpd</value>
                 <value>hello.model.FilesUpload</value>
             </list>
         </property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.Oracle8iDialect</prop>
-                <prop key="hibernate.current_session_context_class">thread</prop>
+                <prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate5.SpringSessionContext</prop>
                 <prop key="hibernate.show_sql">true</prop>
             </props>
         </property>

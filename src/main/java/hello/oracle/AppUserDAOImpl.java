@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import hello.model.AppUser;
@@ -22,6 +23,14 @@ public class AppUserDAOImpl implements AppUserDAO {
         Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         session.save(u);
+        tx.commit();
+        session.close();
+    }
+
+    public void updateUser(AppUser u) {
+        Session session = this.sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        session.update(u);
         tx.commit();
         session.close();
     }
@@ -55,4 +64,44 @@ public class AppUserDAOImpl implements AppUserDAO {
         AppUser user = (AppUser) session.load(AppUser.class, id);
         return user;
     }
+
+    @Override
+    public void deleteAppUser(Integer user_id)
+    {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = this.sessionFactory.openSession();;
+            transaction = session.getTransaction();
+            transaction.begin();
+
+            AppUser appUser = session.get(AppUser.class, user_id);
+            if(appUser!=null){
+                session.delete(appUser);
+            }
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @Override
+    public void addUserRole(Integer user_id, Integer role_id)
+    {
+        Session session = this.sessionFactory.openSession();
+        String sql = "insert into USER_ROLE (user_id, role_id) values("+user_id+","+role_id+")";
+        Query query = session.createQuery(sql);
+        //query.setParameter("user_id",user_id);
+        //query.setParameter("role_id",role_id);
+        query.executeUpdate();
+    }
+
    }
