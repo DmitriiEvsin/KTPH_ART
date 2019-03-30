@@ -55,6 +55,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // For ADMIN only.
         http.authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/user/admin").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/user/view").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/user/save").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/role/admin").access("hasRole('ROLE_ADMIN')");
 
         // When the user has logged in as XX.
         // But access a page that requires role YY,
@@ -66,7 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Submit URL of login page.
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
                 .loginPage("/login")//
-                .defaultSuccessUrl("/userAccountInfo")//
+                .defaultSuccessUrl("/")//
                 .failureUrl("/login?error=true")//
                 .usernameParameter("username")//
                 .passwordParameter("password")

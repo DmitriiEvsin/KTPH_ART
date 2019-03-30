@@ -8,14 +8,28 @@
 
 
 <div class="site-body container">
-        <h3>Пользователи</h3>
-        <table class="table tbl-papers">
-            <tr><th>Ид</th><th>Название</th></tr>
-            <tr>
-                <td th:text="${user.user_id}" />
-                <td th:text="${user.user_name}" />
-            </tr>
-        </table>
+    <p th:text="'Ид пользователя: '+${user.user_id}"/>
+    <p th:text="'Имя пользователя: '+${user.user_name}"/>
+    <p th:text="'Роли пользователя: '+${user.getRole_names()}"/>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>Роль</th>
+            <th class="button-column"></th>
+        </tr>
+        </thead>
+        <tr th:each="role: ${user.roles}">
+            <td th:text="${role}"/>
+            <td>
+                <form action="#" th:action="@{/role/delete}" method="post">
+                    <input type="hidden" name="role_id" th:value="${role.role_id}"/>
+                    <input type="submit" value="Удалить роль" class="btn btn-danger"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+
 </div>
 
 

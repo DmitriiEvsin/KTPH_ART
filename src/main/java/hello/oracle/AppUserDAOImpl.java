@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import hello.model.AppUser;
@@ -22,6 +23,14 @@ public class AppUserDAOImpl implements AppUserDAO {
         Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         session.save(u);
+        tx.commit();
+        session.close();
+    }
+
+    public void updateUser(AppUser u) {
+        Session session = this.sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        session.update(u);
         tx.commit();
         session.close();
     }
@@ -54,5 +63,32 @@ public class AppUserDAOImpl implements AppUserDAO {
         Session session = this.sessionFactory.openSession();
         AppUser user = (AppUser) session.load(AppUser.class, id);
         return user;
+    }
+
+    public void deleteAppUser(Integer user_id)
+    {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = this.sessionFactory.openSession();;
+            transaction = session.getTransaction();
+            transaction.begin();
+
+            AppUser appUser = session.get(AppUser.class, user_id);
+            if(appUser!=null){
+                session.delete(appUser);
+            }
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
    }
