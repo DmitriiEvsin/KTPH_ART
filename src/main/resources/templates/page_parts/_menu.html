@@ -5,11 +5,10 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/paper/admin">Статьи</a></li>
-                <li><a href="/user/admin">Пользователи</a></li>
-                <li><a href="/role/admin">Роли</a></li>
-                <li><a th:href="@{/userInfo}">Инфа для юзеров</a></li>
-                <li><a th:href="@{/admin}">Администрирование</a></li>
+                <li><a th:if="${#request.userPrincipal != null}" href="/paper/admin">Статьи</a></li>
+                <li><a th:if="${#request.userPrincipal != null}" href="/user/admin">Пользователи</a></li>
+                <li><a th:if="${#request.userPrincipal != null}" th:href="@{/role/admin}">Роли</a></li>
+                <li><a th:if="${#request.userPrincipal != null}" th:href="@{/admin}">Администрирование</a></li>
                 <li><a th:if="${#request.userPrincipal != null}" th:href="@{/logout}">Выйти</a></li>
                 <li><a th:if="${#request.userPrincipal == null}" th:href="@{/login}">Войти</a></li>
             </ul>

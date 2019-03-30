@@ -1,9 +1,13 @@
 package hello.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import hello.dao.AppRoleDAO;
+import hello.dao.AppUserDAO;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "APP_USER")
@@ -20,6 +24,12 @@ public class AppUser {
 
     @Column(name = "enabled")
     private boolean enabled;
+
+    @ManyToMany
+    @JoinTable (name="USER_ROLE",
+            joinColumns=@JoinColumn (name="user_id"),
+            inverseJoinColumns=@JoinColumn(name="role_id"))
+    private List<AppRole> roles;
 
     public int getUser_id() {
         return user_id;
@@ -51,6 +61,33 @@ public class AppUser {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getRole_names()
+    {
+        StringBuilder sb = new StringBuilder();
+        for (AppRole role : this.roles){
+            sb.append(role.getRole_name());
+            sb.append(", ");
+        }
+        return sb.toString();
+    }
+
+    public List<AppRole> getRoles()
+    {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        AppRoleDAO appRoleDAO = context.getBean(AppRoleDAO.class);
+        return appRoleDAO.getUserRoles(this.user_id);
+    }
+
+    public void setRoles(ArrayList<AppRole> roles)
+    {
+        this.roles = roles;
+    }
+
+    public void addRole(AppRole appRole)
+    {
+        this.roles.add(appRole);
     }
 
     @Override

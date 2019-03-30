@@ -7,16 +7,33 @@
 <th:block th:include="/page_parts/_menu"></th:block>
 
 
-<div class="site-body container">
+<div class="site-body container" align="center">
 
-        <h3>Роли</h3>
-        <table class="table tbl-papers">
-            <tr><th>Роль</th></tr>
-            <tr th:each="role: ${roles}">
-                <td th:text="${role}" />
-            </tr>
-        </table>
-        <a class="btn btn-success" th:href="@{/role/save}">Добавить роль</a>
+    <h2>Роли</h2>
+    <table class="table tbl-papers">
+        <tr>
+            <th>Роль</th>
+            <th class="button-column"></th>
+        </tr>
+        <tr th:each="role: ${roles}">
+            <td th:text="${role}"/>
+            <td>
+                <form action="#" th:action="@{/role/delete}" method="post">
+                    <input type="hidden" name="role_id" th:value="${role.role_id}"/>
+                    <input type="submit" value="Удалить роль" class="btn btn-danger"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <div align="center">
+        <h3>Добавить роль:</h3>
+        <form action="#" th:action="@{/role/save}" th:object="${new_role}" method="post">
+            <input class="form-control" type="text" th:field="*{role_name}" placeholder="Роль"
+                   autocomplete="off"/>
+            <br>
+            <input type="submit" value="Добавить роль" class="btn btn-success"/>
+        </form>
+    </div>
 </div>
 
 </body>
