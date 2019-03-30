@@ -8,9 +8,9 @@
     <div class="site-body">
         <div class="container">
             <div class="starter-template" align="center">
-                <h1>Привеееет</h1>
+                <h1 th:if="${#request.userPrincipal != null}" th:utext="'Привет, '+${#request.userPrincipal.name}"></h1>
                 <h2>
-                    <span th:text="'Message: ' + ${message}"></span>
+                    <span th:text="${message}"></span>
                 </h2>
             </div>
         </div>

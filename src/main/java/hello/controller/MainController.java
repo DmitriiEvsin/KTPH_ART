@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class MainController {
 
-    @RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
-    public String welcomePage(Model model) {
-        model.addAttribute("title", "Welcome");
-        model.addAttribute("message", "Эта страница видна всем");
-        return "welcomePage";
+    @RequestMapping(value = { "/", "/welcome", "/index" }, method = RequestMethod.GET)
+    public String indexPage(Model model) {
+        model.addAttribute("message", "Добро пожаловать!");
+        return "index";
     }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)

@@ -3,18 +3,9 @@ body, html {
     height: 100%;
 }
 
-h1{
-    color: #5d83ff;
-    font-family: "Adobe Gothic Std B";
-}
-
-h2{
-    color: #ff66dc;
-}
 
 .site-body{
     height: 100%;
-    background-image: url("../img/bg.jpg");
 }
 
 .error-page{
@@ -22,22 +13,6 @@ h2{
     background-image: url("../img/404.jpg");
     background-repeat: no-repeat;
     background-position: center;
-}
-
-.tbl-papers{
-    background-color: beige;
-}
-
-table{
-    border-collapse: collapse; /*убираем пустые промежутки между ячейками*/
-    border: 1px solid black; /*устанавливаем для таблицы внешнюю границу серого цвета толщиной 1px*/
-}
-th {
-    border: 1px solid grey;
-}
-td {
-    border: 1px solid grey;
-    background-color: lightgray;
 }
 
 .btn-asc {
@@ -52,11 +27,6 @@ td {
 
 }
 
-.bazinga {
-    margin-top: 50px;
-    height: 362px;
-    display: none;
-    background-image: url("../img/bazinga.png");
-    background-repeat: no-repeat;
-    background-position: center;
+.button-column{
+    width: 10%;
 }
