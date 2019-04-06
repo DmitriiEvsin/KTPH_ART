@@ -9,6 +9,7 @@
                 <li><a th:if="${#request.userPrincipal != null}" href="/user/admin">Пользователи</a></li>
                 <li><a th:if="${#request.userPrincipal != null}" th:href="@{/role/admin}">Роли</a></li>
                 <li><a th:if="${#request.userPrincipal != null}" th:href="@{/admin}">Администрирование</a></li>
+                <li><a th:if="${#request.userPrincipal != null}" th:href="@{/lk}">Личный кабинет</a></li>
                 <li><a th:if="${#request.userPrincipal != null}" th:href="@{/logout}">Выйти</a></li>
                 <li><a th:if="${#request.userPrincipal == null}" th:href="@{/login}">Войти</a></li>
             </ul>

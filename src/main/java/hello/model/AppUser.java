@@ -25,11 +25,23 @@ public class AppUser {
     @Column(name = "enabled")
     private boolean enabled;
 
+    @Column(name = "fio")
+    private String fio;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "post")
+    private String post;
+
     @ManyToMany
     @JoinTable (name="USER_ROLE",
             joinColumns=@JoinColumn (name="user_id"),
             inverseJoinColumns=@JoinColumn(name="role_id"))
     private List<AppRole> roles;
+
+    /*@OneToMany(mappedBy = "master", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private ArrayList<Course> courses;*/
 
     public int getUser_id() {
         return user_id;

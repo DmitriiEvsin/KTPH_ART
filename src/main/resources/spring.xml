@@ -52,6 +52,7 @@
                 <value>hello.model.UserRole</value>
                 <value>hello.model.UserRoleUpd</value>
                 <value>hello.model.FilesUpload</value>
+                <value>hello.model.Course</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -80,6 +81,10 @@
     </bean>
 
     <bean id="fileUploadDao" class="hello.oracle.FilesUploadDAOImpl">
+        <property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
+    </bean>
+
+    <bean id="courseDao" class="hello.oracle.CourseDAOImpl">
         <property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
     </bean>
 
